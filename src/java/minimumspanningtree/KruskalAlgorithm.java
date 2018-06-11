@@ -2,8 +2,8 @@ package minimumspanningtree;
 
 import graph.Graph;
 
-public class KruskalAlgorithm<T> implements MinimumSpanningTree<T> {
-    @Override
+public class KruskalAlgorithm<T>  {
+
     public int getMinimumSpanningTree(Graph<T> graph, T start) {
 
         /*String outputMessage = "";

@@ -6,7 +6,7 @@ import minimumspanningtree.PrimAlgorithm;
 public class Main {
     public static void main(String[] args) {
 
-        MinimumSpanningTree<String> prims = new PrimAlgorithm<>();
+
 
 
         Graph<String> ud1 = new UndirectedGraph<>();
@@ -17,7 +17,9 @@ public class Main {
         ud1.addArc("3","1",46);
         ud1.addArc("3","2",75);
 
-        //System.out.println(prims.getMinimumSpanningTree(ud1,"3"));
+        MinimumSpanningTree<String> prim1 = new PrimAlgorithm<>(ud1,"1");
+        System.out.println(prim1.getMSTGraph());
+        System.out.println(prim1.getValueOfMSTGraph());
 
         Graph<String> ud2 = new UndirectedGraph<>();
         ud2.add("1");
@@ -36,7 +38,9 @@ public class Main {
         ud2.addArc("4","6",10);
         ud2.addArc("5","6",500);
 
-        System.out.println(prims.getMinimumSpanningTree(ud2,"1"));
+        MinimumSpanningTree<String> prim2 = new PrimAlgorithm<>(ud2,"2");
+        System.out.println(prim2.getMSTGraph());
+        System.out.println(prim2.getValueOfMSTGraph());
 
     }
 }

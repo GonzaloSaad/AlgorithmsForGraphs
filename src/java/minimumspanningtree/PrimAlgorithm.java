@@ -7,9 +7,26 @@ import graph.UndirectedGraph;
 
 import java.util.*;
 
-public class PrimAlgorithm<T> implements MinimumSpanningTree<T> {
+public class PrimAlgorithm<T> extends MinimumSpanningTree<T> {
 
-    public int getMinimumSpanningTree(Graph<T> graph, T start) {
+
+    public PrimAlgorithm(Graph<T> graph, T start) {
+        super(graph, start);
+    }
+
+    private Node<T> getAvailableNodeForArc(Set<Node<T>> unvisited, Arc<T> arc) {
+        if (unvisited.contains(arc.getEnd())) {
+            return arc.getEnd();
+        }
+
+        if (unvisited.contains(arc.getInit())) {
+            return arc.getInit();
+        }
+        return null;
+    }
+
+    @Override
+    protected void calculateMST(Graph<T> graph, T start) {
         if (graph == null)
             throw new NullPointerException();
 
@@ -34,9 +51,13 @@ public class PrimAlgorithm<T> implements MinimumSpanningTree<T> {
                 }
             }
 
+            Arc<T> arc;
+
+            do {
+                arc = arcAvailable.remove();
+            } while (getAvailableNodeForArc(unvisited, arc) == null);
 
 
-            final Arc<T> arc = arcAvailable.remove();
             s += arc.getWeight();
             path.add(arc);
 
@@ -44,27 +65,17 @@ public class PrimAlgorithm<T> implements MinimumSpanningTree<T> {
             unvisited.remove(node);
         }
 
-        Graph<T> r = new UndirectedGraph<>();
-        for (Node<T> n: graph.getVertices()){
-            r.add(n.getValue());
+
+        Graph<T> MST = new UndirectedGraph<>();
+        for(Node<T> n: graph.getVertices()){
+            MST.add(n.getValue());
         }
         for(Arc<T> a: path){
-            r.add(a);
+            MST.add(a);
         }
 
+        this.MSTGraph = MST;
+        this.valueOfMSTGraph = s;
 
-        System.out.println(r);
-        return s;
-    }
-
-    private Node<T> getAvailableNodeForArc(Set<Node<T>> unvisited, Arc<T> arc) {
-        if (unvisited.contains(arc.getEnd())) {
-            return arc.getEnd();
-        }
-
-        if (unvisited.contains(arc.getInit())) {
-            return arc.getInit();
-        }
-        return null;
     }
 }
